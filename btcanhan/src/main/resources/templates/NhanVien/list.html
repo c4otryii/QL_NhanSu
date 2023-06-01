@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Nhân Viên</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h1 th:text=${title}></h1>
+    <table class="table">
+        <tr>
+            <th>Mã Nhân Viên</th>
+            <th>Tên Nhân Viên</th>
+            <th>Giới tính</th>
+            <th>Nơi sinh</th>
+            <th>Tên phòng</th>
+            <th>Lương</th>
+        </tr>
+        <tr th:each="nhanvien: ${nhanviens}">
+            <td th:text="${nhanvien.ma_nv}"></td>
+            <td th:text="${nhanvien.ten_nv}"></td>
+            <td th:if="${nhanvien.phai == 'Nam'}">
+                <img src="/image/man.jpg" alt="Nam" style="with:45px;height:45px" >
+            </td>
+            <td th:if="${nhanvien.phai != 'Nam'}">
+                <img src="/image/woman.jpg" alt="Nữ" style="with:45px;height:45px">
+            </td>
+
+            <td th:text="${nhanvien.noi_sinh}"></td>
+            <td th:text="${nhanvien.PHONGBAN.ten_phong}"></td>
+            <td th:text="${nhanvien.luong}"></td>
+            <td>
+                <a th:href="@{/nhanviens/edit/{ma_nv}(ma_nv=${nhanvien.ma_nv})}"><i class="fas fa-edit"></i></a>
+                <a th:href="@{/nhanviens/delete/{ma_nv}(ma_nv=${nhanvien.ma_nv})}" onclick="return confirm('Bạn có chắc muốn xoá?')"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>
